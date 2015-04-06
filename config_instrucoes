@@ -1,0 +1,8 @@
+Primeira linha:
+	quantidade de entradas
+	quantidade de neurônios na camada escondida
+	quantidade de neurônios na camada de saída
+Segunda linha: função de ativação
+Terceira linha: quantidade de amostras para treinamento e quantidade para teste
+Quarta linha: número de épocas, erro mínimo e taxa de aprendizagem
+Nas linhas seguintes: cada amostra com sua respectiva saída
