@@ -11,7 +11,7 @@ O processo de treinamento de redes MLP (em português a abreviação é PMC) uti
 
 A primeira fase do treinamento é a propagação adiantada (forward) onde as amostras são inseridas nas entradas da rede e propagadas camada a camada até a produção das respectivas saídas. Isso é feito somente para obter as respostas da rede.
 
-As respostas produzidas pelas saídas são comparadas com as respectivas respostas desejadas. São gerados desvios (erros), em seguida é aplicada a segunda fase do método backpropagation que é a backward (propagação reversa). Nessa fase as alterações dos pesos sinápticos e limiares de todos os neurônios da rede são executadas no decorrer desta fase.
+As respostas produzidas pelas saídas são comparadas com as respectivas respostas desejadas. São gerados desvios (erros), em seguida é aplicada a segunda fase do método backpropagation que é a backward (propagação reversa). Nessa fase as alterações dos pesos sinápticos e limiares de todos os neurônios da rede são executadas.
 
 Para entender melhor a teoria, aconselho estudar o livro "Redes Neurais Artificiais" do Ivan Nunes.
 
