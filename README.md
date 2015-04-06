@@ -5,7 +5,7 @@ Uma MLP (Multilayer perceptron) é uma rede neural feedforward que mapeia conjun
  
 MLP é composta por várias camadas de nós (vértices) em um grafo direcionado, cada camada é totalmente conectada na próxima. Exceto para os nós de entrada, cada nó é um neurônio com uma função de ativação.
 
-MLP utilizada treinamento supervisionado, ou seja, você mostra as entradas com a respectiva saída para treinar a rede. Se você tem um conjunto de dados, geralmente é utilizado 70% para treinar e 30% para testar, isso pode variar bastante.
+MLP utiliza treinamento supervisionado, ou seja, você mostra as entradas com a respectiva saída para treinar a rede. Se você tem um conjunto de dados, geralmente é utilizado 70% para treinar e 30% para testar, isso pode variar bastante.
 
 O processo de treinamento de redes MLP (em português a abreviação é PMC) utiliza o algoritmo backpropagation conhecido também como regra delta generalizada.
 
