@@ -106,13 +106,13 @@ double MLP::erroQuadraticoMedio(std::vector<std::vector<double> >& saidas)
 	for(int i = 0; i < qte_amostras; i++)
 	{
 		std::vector<double>& saida = saidas[i];
-		double eq = 0; // erro quadr·tico
+		double eq = 0; // erro quadr√°tico
 
 		for(int j = 0; j < neuronios_saida; j++)
 			eq += pow(saida[j] - camada_saida->get(j)->gerarSaida(), 2);
 		erro += eq / 2;
 	}
-	return erro / qte_amostras; // erro quadr·tico mÈdio
+	return erro / qte_amostras; // erro quadr√°tico m√©dio
 }
 
 void MLP::treinar(std::vector<std::vector<double> >& amostras, std::vector<std::vector<double> >& saidas)
@@ -126,7 +126,7 @@ void MLP::treinar(std::vector<std::vector<double> >& amostras, std::vector<std::
 	
 	while(num_epocas <= max_epocas)
 	{
-		// c·lculo do erro quadr·tico mÈdio
+		// c√°lculo do erro quadr√°tico m√©dio
 		erro = erroQuadraticoMedio(saidas);
 
 		for(int i = 0; i < qte_amostras; i++)
@@ -164,7 +164,7 @@ void MLP::treinar(std::vector<std::vector<double> >& amostras, std::vector<std::
 					Neuronio * neuronio = camada->get(j);
 					double somatorio = 0;
 
-					// pega os que est„o saindo exceto o -1
+					// pega os que est√£o saindo exceto o -1
 					for(unsigned int k = 0; k < camada_frente->getQuantidadeNeuronios(); k++)
 					{
 						Neuronio * neuronio_frente = camada_frente->get(k);
@@ -186,7 +186,7 @@ void MLP::treinar(std::vector<std::vector<double> >& amostras, std::vector<std::
 
 		double erro_ant = erro;
 
-		// c·lculo do erro quadr·tico mÈdio
+		// c√°lculo do erro quadr√°tico m√©dio
 		erro = erroQuadraticoMedio(saidas);
 		num_epocas++;
 
@@ -219,19 +219,3 @@ void MLP::treinar(std::vector<std::vector<double> >& amostras, std::vector<std::
 }
 
 #endif
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
