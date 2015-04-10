@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include <algorithm>
 #include "MLP.h"
 #include "neuronio.h"
 #include "funcao_linear.h"
@@ -82,9 +83,23 @@ int main(int argc, char *argv[])
 
 		saidas.push_back(amostra_saidas);
 	}
-
+	
+	// vetor de índices para embaralhar as entradas
+	std::vector<int> vet_indices;
+	for(int i = 0; i < qte_amostras + qte_teste; i++)
+		vet_indices.push_back(i);
+	
+	// embaralha as entradas
+	std::vector<std::vector<double> > amostras_random, saidas_random;
+	for(int i = 0; i < qte_amostras + qte_teste; i++)
+	{
+		std::random_shuffle(vet_indices.begin(), vet_indices.end());
+		amostras_random.push_back(amostras[vet_indices[i]]);
+		saidas_random.push_back(saidas[vet_indices[i]]);
+	}
+	
 	// treina a rede
-	mlp.treinar(amostras, saidas);
+	mlp.treinar(amostras_random, saidas_random);
 
 	delete funcao_ativacao;
 
