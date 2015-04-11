@@ -161,7 +161,8 @@ void MLP::treinar(std::vector<std::vector<double> >& amostras, std::vector<std::
 			{
 				Neuronio * neuronio = camada_saida->get(j);
 
-				double sigma = (saida[j] - neuronio->gerarSaida()) * neuronio->getFuncaoAtivacao()->derivada(neuronio->getSomatorio());
+				double sigma = (saida[j] - neuronio->gerarSaida()) *
+							   neuronio->getFuncaoAtivacao()->derivada(neuronio->getSomatorio());
 
 				neuronio->setSigma(sigma);
 
@@ -243,7 +244,7 @@ void MLP::treinar(std::vector<std::vector<double> >& amostras, std::vector<std::
 				indice_iris_desejada = 1;
 			else if(saida_gerada > 2 * percent)
 				indice_iris_desejada = 2;
-
+			
 			if(saida[j] == 0.5)
 				indice_iris_saida = 1;
 			else if(saida[j] == 1)
