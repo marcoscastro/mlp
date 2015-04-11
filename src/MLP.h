@@ -236,25 +236,24 @@ void MLP::treinar(std::vector<std::vector<double> >& amostras, std::vector<std::
 		for(int j = 0; j < neuronios_saida; j++)
 		{
 			Neuronio * neuronio = camada_saida->get(j);
+			int indice_desejada = 0, indice_saida = 0;
+			int saida_arredondada = round(neuronio->gerarSaida());
 
-			int indice_iris_desejada = 0, indice_iris_saida = 0;
-			double saida_gerada = neuronio->gerarSaida(), percent = 1 / 3.0;
-
-			if(saida_gerada > percent && saida_gerada <= 2 * percent)
-				indice_iris_desejada = 1;
-			else if(saida_gerada > 2 * percent)
-				indice_iris_desejada = 2;
-			
-			if(saida[j] == 0.5)
-				indice_iris_saida = 1;
-			else if(saida[j] == 1)
-				indice_iris_saida = 2;
-
-			if(indice_iris_desejada == indice_iris_saida)
+			if(saida[j] == saida_arredondada)
 				acertos++;
 
+			if(saida[j] == 0)
+				indice_desejada = 1;
+			else if(saida[j] == 1)
+				indice_desejada = 2;
+
+			if(saida_arredondada == 0)
+				indice_saida = 1;
+			else if(saida_arredondada == 1)
+				indice_saida = 2;
+
 			printf("desejada: %s\tsaida da rede: %s\n",
-				   str[indice_iris_desejada], str[indice_iris_saida]);
+				   str[indice_desejada], str[indice_saida]);
 		}
 	}
 
