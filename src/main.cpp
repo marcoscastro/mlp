@@ -22,7 +22,7 @@ int main(int argc, char *argv[])
 
 	int num_entradas, num_camadas_escondidas, neuronios_saida;
 	int qte_amostras, qte_teste, max_epocas;
-	double erro_min, taxa_aprendizagem;
+	double erro_min, taxa_aprendizagem, taxa_reducao_aprendizado;
 	char str_funcao_ativacao[255];
 	std::vector<int> neuronios_camadas_escondidas;
 	
@@ -42,7 +42,7 @@ int main(int argc, char *argv[])
 	
 	fscanf(arq, "%s", str_funcao_ativacao);
 	fscanf(arq, "%d %d", &qte_amostras, &qte_teste);
-	fscanf(arq, "%d %lf %lf", &max_epocas, &erro_min, &taxa_aprendizagem);
+	fscanf(arq, "%d %lf %lf %lf", &max_epocas, &erro_min, &taxa_aprendizagem, &taxa_reducao_aprendizado);
 	FuncaoAtivacao * funcao_ativacao = NULL;
 
 	// verifica a função de ativacao
@@ -53,8 +53,8 @@ int main(int argc, char *argv[])
 
 	// cria uma instancia de MLP passando os parametros
 	MLP mlp(qte_amostras, qte_teste, num_entradas, num_camadas_escondidas, 
-				neuronios_saida, taxa_aprendizagem, max_epocas, erro_min, 
-				funcao_ativacao, neuronios_camadas_escondidas);
+				neuronios_saida, taxa_aprendizagem, taxa_reducao_aprendizado, 
+				max_epocas, erro_min, funcao_ativacao, neuronios_camadas_escondidas);
 
 	// vetores de entradas e saidas
 	std::vector<std::vector<double> > amostras, saidas;

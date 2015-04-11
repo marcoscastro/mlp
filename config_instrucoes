@@ -8,5 +8,5 @@ Segunda linha:
 	quantidade de neurônios em cada camada escondida
 Terceira linha: função de ativação
 Quarta linha: quantidade de amostras para treinamento e quantidade para teste
-Quinta linha: número de épocas, erro mínimo e taxa de aprendizagem
+Quinta linha: número de épocas, erro mínimo, taxa de aprendizagem e reducao da taxa de aprendizagem
 Nas linhas seguintes: cada amostra com sua respectiva saída

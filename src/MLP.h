@@ -11,7 +11,7 @@ class MLP
 private:
 	std::vector<Camada*> camadas;
 	std::vector<SinalEntrada*> entradas;
-	double taxa_aprendizado, erro_min;
+	double taxa_aprendizado, taxa_reducao_aprendizado, erro_min;
 	int num_camadas_escondidas, max_epocas;
 	int qte_amostras, qte_teste;
 	int num_entradas, neuronios_saida;
@@ -19,8 +19,8 @@ private:
 public:
 
 	MLP(int qte_amostras, int qte_teste, int num_entradas,
-		int neuronios_escondida, int neuronios_saida,
-		double taxa_aprendizagem, int max_epocas, double erro_min,
+		int num_camadas_escondidas, int neuronios_saida,
+		double taxa_aprendizagem, double taxa_reducao_aprendizado, int max_epocas, double erro_min,
 		FuncaoAtivacao * funcao_ativacao, std::vector<int>& neuronios_camadas_escondidas);
 	~MLP();
 	void adicionarCamada(Camada* camada);
@@ -30,11 +30,12 @@ public:
 
 MLP::MLP(int qte_amostras, int qte_teste, int num_entradas,
 		 int num_camadas_escondidas, int neuronios_saida,
-		 double taxa_aprendizagem, int max_epocas, double erro_min,
+		 double taxa_aprendizagem, double taxa_reducao_aprendizado, int max_epocas, double erro_min,
 		 FuncaoAtivacao * funcao_ativacao, std::vector<int>& neuronios_camadas_escondidas)
 {
 	// atribuição de variáveis
 	this->taxa_aprendizado = taxa_aprendizagem;
+	this->taxa_reducao_aprendizado = taxa_reducao_aprendizado;
 	this->num_camadas_escondidas = num_camadas_escondidas;
 	this->max_epocas = max_epocas;
 	this->erro_min = erro_min;
@@ -68,7 +69,7 @@ MLP::MLP(int qte_amostras, int qte_teste, int num_entradas,
 	adicionarCamada(camada_entrada); // adiciona a camada de entrada
 
 	// cria as camadas escondidas e faz as conexões
-	
+
 	for(int k = 0; k < num_camadas_escondidas; k++)
 	{
 		Camada * camada_escondida = new Camada();
@@ -81,15 +82,15 @@ MLP::MLP(int qte_amostras, int qte_teste, int num_entradas,
 				neuronio->receberEntrada(camadas[k]->get(j), (rand() % 1001) / 1000.0);
 			camada_escondida->receberNeuronio(neuronio);
 		}
-		
+
 		adicionarCamada(camada_escondida); // adiciona a camada escondida
 	}
 
 	// cria a camada de saida e faz as conexoes
 	Camada * camada_saida = new Camada();
-	
+
 	int num_neuronios_ultima_camada_escondida = camadas[num_camadas_escondidas]->getQuantidadeNeuronios();
-	
+
 	for(int i = 0; i < neuronios_saida; i++)
 	{
 		Neuronio * neuronio = new Neuronio(funcao_ativacao);
@@ -208,12 +209,18 @@ void MLP::treinar(std::vector<std::vector<double> >& amostras, std::vector<std::
 		erro = erroQuadraticoMedio(saidas);
 		num_epocas++;
 
+		// atualiza a taxa de aprendizado
+		taxa_aprendizado *= taxa_reducao_aprendizado;
+
 		if(fabs(erro - erro_ant) <= erro_min)
 		{
 			printf("epoca: %d, erro: %lf\n", num_epocas, fabs(erro - erro_ant));
 			break;
 		}
 	}
+
+	char str[][20] = {"setosa", "versicolor", "virginica"};
+	int acertos = 0;
 
 	// teste da rede com uma determinada quantidade de amostras
 	for(int i = qte_amostras; i < qte_amostras + qte_teste; i++)
@@ -229,9 +236,29 @@ void MLP::treinar(std::vector<std::vector<double> >& amostras, std::vector<std::
 		{
 			Neuronio * neuronio = camada_saida->get(j);
 
-			printf("desejada: %lf, calculada: %lf\n", saida[j], neuronio->gerarSaida());
+			int indice_iris_desejada = 0, indice_iris_saida = 0;
+			double saida_gerada = neuronio->gerarSaida(), percent = 1 / 3.0;
+
+			if(saida_gerada > percent && saida_gerada <= 2 * percent)
+				indice_iris_desejada = 1;
+			else if(saida_gerada > 2 * percent)
+				indice_iris_desejada = 2;
+
+			if(saida[j] == 0.5)
+				indice_iris_saida = 1;
+			else if(saida[j] == 1)
+				indice_iris_saida = 2;
+
+			if(indice_iris_desejada == indice_iris_saida)
+				acertos++;
+
+			printf("desejada: %s\tsaida da rede: %s\n",
+				   str[indice_iris_desejada], str[indice_iris_saida]);
 		}
 	}
+
+	printf("\nQuantidade de acertos: %d\n", acertos);
+	printf("Porcentagem de acertos: %.2lf%%\n", ((double)acertos / qte_teste) * 100);
 }
 
 #endif
