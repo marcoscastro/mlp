@@ -69,7 +69,6 @@ MLP::MLP(int qte_amostras, int qte_teste, int num_entradas,
 	adicionarCamada(camada_entrada); // adiciona a camada de entrada
 
 	// cria as camadas escondidas e faz as conexões
-
 	for(int k = 0; k < num_camadas_escondidas; k++)
 	{
 		Camada * camada_escondida = new Camada();
@@ -78,7 +77,7 @@ MLP::MLP(int qte_amostras, int qte_teste, int num_entradas,
 		{
 			Neuronio * neuronio = new Neuronio(funcao_ativacao);
 			neuronio->receberEntrada(entradas[0], (rand() % 1001) / 1000.0);
-			for(int j = 0; j < num_entradas; j++)
+			for(int j = 0; j < neuronios_camadas_escondidas[k]; j++)
 				neuronio->receberEntrada(camadas[k]->get(j), (rand() % 1001) / 1000.0);
 			camada_escondida->receberNeuronio(neuronio);
 		}
@@ -156,6 +155,12 @@ void MLP::treinar(std::vector<std::vector<double> >& amostras, std::vector<std::
 			for(int j = 1; j <= num_entradas; j++)
 				entradas[j]->setValor(amostra[j - 1]);
 
+			for(int j = 0; j < neuronios_saida; j++)
+			{
+				Neuronio * neuronio = camada_saida->get(j);
+				neuronio->invalidaCalculo();
+			}
+
 			// faz o backpropagation da camada de saida
 			for(int j = 0; j < neuronios_saida; j++)
 			{
@@ -232,6 +237,12 @@ void MLP::treinar(std::vector<std::vector<double> >& amostras, std::vector<std::
 		// atribuindo os valores das entradas
 		for(int j = 1; j <= num_entradas; j++)
 			entradas[j]->setValor(amostra[j - 1]);
+
+		for(int j = 0; j < neuronios_saida; j++)
+		{
+			Neuronio * neuronio = camada_saida->get(j);
+			neuronio->invalidaCalculo();
+		}
 
 		for(int j = 0; j < neuronios_saida; j++)
 		{

@@ -11,6 +11,8 @@ private:
 	std::vector<std::pair<Entrada*, double> > entradas; // vetor (entrada,peso)
 	FuncaoAtivacao * funcao_ativacao;
 	double sigma;
+	double saida;
+	bool calculado;
 public:
 	Neuronio(FuncaoAtivacao * funcao_ativacao);
 	void receberEntrada(Entrada * e, double peso);
@@ -23,11 +25,13 @@ public:
 	Entrada* getEntrada(int indice_entrada);
 	void setSigma(double sigma);
 	double getSigma();
+	void invalidaCalculo();
 };
 
 Neuronio::Neuronio(FuncaoAtivacao * funcao_ativacao)
 {
 	this->funcao_ativacao = funcao_ativacao;
+	this->calculado = false;
 }
 
 double Neuronio::gerarSaida()
@@ -43,10 +47,12 @@ void Neuronio::receberEntrada(Entrada * e, double peso)
 double Neuronio::getSomatorio()
 {
 	unsigned int tam_entradas = entradas.size();
-	double saida = 0;
-
+	if(calculado)
+		return saida;
+	saida = 0;
 	for(unsigned int i = 0; i < tam_entradas; i++)
 		saida += entradas[i].first->gerarSaida() * entradas[i].second;
+	calculado = true;
 	return saida;
 }
 
@@ -55,8 +61,19 @@ FuncaoAtivacao* Neuronio::getFuncaoAtivacao()
 	return funcao_ativacao;
 }
 
+void Neuronio::invalidaCalculo()
+{
+	unsigned int tam_entradas = entradas.size();
+	if(!calculado)
+		return;
+	calculado = false;
+	for(unsigned int i = 0; i < tam_entradas; i++)
+		entradas[i].first->invalidaCalculo();
+}
+
 void Neuronio::setPeso(int indice_entrada, double peso)
 {
+	calculado = false;
 	entradas[indice_entrada].second = peso;
 }
 

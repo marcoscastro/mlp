@@ -11,6 +11,7 @@ public:
 	SinalEntrada(double valor);
 	double gerarSaida();
 	void setValor(double valor);
+	void invalidaCalculo() {}
 };
 
 SinalEntrada::SinalEntrada(double valor)

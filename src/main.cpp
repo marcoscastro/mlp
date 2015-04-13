@@ -30,6 +30,8 @@ int main(int argc, char *argv[])
 	
 	fscanf(arq, "%d %d %d", &num_entradas, &num_camadas_escondidas, &neuronios_saida);
 	
+	neuronios_camadas_escondidas.push_back(num_entradas);
+	
 	// obtem a quantidade de neuronios de cada camada escondida
 	for(int i = 0; i < num_camadas_escondidas; i++)
 	{
