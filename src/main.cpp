@@ -41,7 +41,6 @@ int main(int argc, char *argv[])
 		neuronios_camadas_escondidas.push_back(n_neuronios);
 	}
 	
-	
 	fscanf(arq, "%s", str_funcao_ativacao);
 	fscanf(arq, "%d %d", &qte_amostras, &qte_teste);
 	fscanf(arq, "%d %lf %lf %lf", &max_epocas, &erro_min, &taxa_aprendizagem, &taxa_reducao_aprendizado);

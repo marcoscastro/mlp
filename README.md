@@ -17,6 +17,6 @@ Para entender melhor a teoria, aconselho estudar o livro "Redes Neurais Artifici
 
 A configuração da rede pode ser passada com um arquivo por parâmetro. As instruções sobre o formato do arquivo que deve ser passado encontra-se no arquivo "config_instrucoes".
 
-Os arquivos "config_rede1" e "config_rede2" são exemplos de redes com suas respectivas configurações. Em ambos os arquivos foi utilizada a função tangente hiperbólica, também está disponível a função linear.
+Os arquivos "exemplo_rede" e "dataset_iris" são exemplos de redes com suas respectivas configurações. Em ambos os arquivos foi utilizada a função tangente hiperbólica, também está disponível a função linear.
 
 Quaisquer contribuições serão bem-vindas!
