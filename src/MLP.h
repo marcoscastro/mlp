@@ -225,9 +225,6 @@ void MLP::treinar(std::vector<std::vector<double> >& amostras, std::vector<std::
 		}
 	}
 
-	char str[][20] = {"setosa", "versicolor", "virginica"};
-	int acertos = 0;
-
 	// teste da rede com uma determinada quantidade de amostras
 	for(int i = qte_amostras; i < qte_amostras + qte_teste; i++)
 	{
@@ -247,29 +244,11 @@ void MLP::treinar(std::vector<std::vector<double> >& amostras, std::vector<std::
 		for(int j = 0; j < neuronios_saida; j++)
 		{
 			Neuronio * neuronio = camada_saida->get(j);
-			int indice_desejada = 0, indice_saida = 0;
-			int saida_arredondada = round(neuronio->gerarSaida());
 
-			if(saida[j] == saida_arredondada)
-				acertos++;
-
-			if(saida[j] == 0)
-				indice_desejada = 1;
-			else if(saida[j] == 1)
-				indice_desejada = 2;
-
-			if(saida_arredondada == 0)
-				indice_saida = 1;
-			else if(saida_arredondada == 1)
-				indice_saida = 2;
-
-			printf("desejada: %s\tsaida da rede: %s\n",
-				   str[indice_desejada], str[indice_saida]);
+			printf("desejada: %lf\tsaida da rede: %lf\n",
+				   saida[j], neuronio->gerarSaida());
 		}
 	}
-
-	printf("\nQuantidade de acertos: %d\n", acertos);
-	printf("Porcentagem de acertos: %.2lf%%\n", ((double)acertos / qte_teste) * 100);
 }
 
 #endif
